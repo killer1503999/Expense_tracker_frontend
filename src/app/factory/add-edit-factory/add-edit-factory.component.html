@@ -1,0 +1,30 @@
+
+<div class="from-group row">
+    <div class="mb-3">
+        <label class="col-form-label">Factory Name</label>
+        <input required #factoryName="ngModel" type="text" class="form-control" [(ngModel)]="name" />
+        <div *ngIf="factoryName.touched && factoryName.invalid" class="alert-danger" >
+            Factory is required
+        </div>
+    </div>
+    <div class="col-md-3">
+        <label class="col-form-label">Location</label>
+        <input required #locationName="ngModel"  type="text" class="form-control" [(ngModel)]="location" />
+        <div *ngIf="locationName.touched && locationName.invalid" class="alert-danger" >
+            Location is required
+        </div>
+        <!-- <div *ngIf="locationName.value > 2" >yes</div> -->
+    </div>
+    
+</div>
+<div >
+    <div class="col-md-3">
+        <button [disabled]= "isDisabled()"  (click)="addFactory()" *ngIf="dep.id==0" class="col-auto btn btn-primary mt-3333">
+            Add
+        </button>
+        
+        <button [disabled]= "isDisabled()" (click)="updateFactory()" *ngIf="dep.id!=0" class="col-auto btn btn-primary">
+            Update
+        </button>
+    </div>
+</div>

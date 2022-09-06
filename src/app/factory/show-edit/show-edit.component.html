@@ -1,0 +1,56 @@
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary float-right m-2" data-bs-toggle="modal" 
+data-bs-target="#exampleModal" (click)="addClick()">
+    Add Factory
+</button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{Modaltitle}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" 
+          aria-label="Close" (click)="closeClick()"></button>
+        </div>
+        <div class="modal-body">
+            <!-- [dep]="dep" -->
+          <app-add-edit-factory [dep]=dep *ngIf="ActivateAddEditFactory"> </app-add-edit-factory>
+        </div> 
+      </div>
+    </div>
+  </div>
+
+
+<table class="table">
+    <thead>
+      <tr>
+          <th scope="col">Factory Id</th>
+          <th scope="col">Factory Name</th>
+          <th scope="col">Factory Location</th>
+          <th scope="col">Options</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr  *ngFor="let item of factoryList" >
+        <th scope="row">{{item.id}}</th>
+        <td>{{item.name}}</td>
+        <td>{{item.location}}</td>
+        <td> 
+            <!-- <button type="button" class="btn btn-light mr-10">Edit</button> -->
+            
+              <button type="button" class="btn btn-light mr-10" routerLink="product" (click)="sendMessage(item)">GoTo</button>
+            
+            
+              <button type="button" class="btn btn-danger mr-10" (click)="deleteFactory(item)"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+              </svg></button>
+            
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+
+

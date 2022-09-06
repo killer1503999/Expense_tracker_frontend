@@ -1,0 +1,47 @@
+
+  <button routerLink="/factory/product" type="button" class="btn btn-primary" (click)="onProductClick()">Go back to Product List</button>
+  <button (click)="download()"> download</button>
+  <div class="product_details">
+  <form class="form-horizontal">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Product Id</label>
+      <input type="email" class="form-control" id="exampleInputEmail1"
+       aria-describedby="emailHelp" value={{ProductList[0].id}}
+       style="width: 200px;"
+        readonly>
+      <div id="emailHelp" class="form-text"></div>
+    </div>
+    <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Factory Id</label>
+      <input type="email" class="form-control" id="exampleInputEmail1" 
+      aria-describedby="emailHelp" value={{ProductList[0].factoryName}}
+      style="width: 200px;"
+       readonly>
+      
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Product Name</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" 
+          aria-describedby="emailHelp" value={{ProductList[0].productsName}}
+          style="width: 200px;" readonly>
+          
+    </div>
+    <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Quantity</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" 
+          aria-describedby="emailHelp" value={{ProductList[0].quantity}}
+          style="width: 200px;" readonly>
+ 
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+        <textarea class="Discription_box form-control " id="exampleFormControlTextarea1" rows="3" value={{ProductList[0].description}}
+         readonly></textarea>
+    </div>
+    <div class="image_box">
+
+      <label for="exampleFormControlTextarea1"> Product Photo</label>
+      <img [src]=Images class="img-responsive" alt="" >
+    </div>
+  </form>
+</div>

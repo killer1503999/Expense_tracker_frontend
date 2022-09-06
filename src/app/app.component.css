@@ -1,0 +1,13 @@
+h1{
+    text-align: center;
+}
+
+nav{
+    margin-top: 10px;
+    margin-bottom: 10px
+}
+
+.Goto {
+    margin-right: 100px;
+    background-color: aqua;
+}

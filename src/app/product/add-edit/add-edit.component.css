@@ -1,0 +1,22 @@
+div.alert-danger {
+    color: red
+}
+.Add_update{
+    position: relative;
+    top: 1px;
+    left: 1px;
+    bottom: 100px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-size-adjust: bold;
+}
+.download{
+    position: relative;
+    top: 51px;
+    left: 1000px;
+    bottom: 100px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    text-size-adjust: bold;
+
+}
