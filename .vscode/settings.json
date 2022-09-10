@@ -1,5 +1,5 @@
 {
-    "appService.defaultWebAppToDeploy": "",
-    "appService.deploySubpath": "dist",
-    "appService.showBuildDuringDeployPrompt": false
+  "appService.defaultWebAppToDeploy": "/subscriptions/515bb616-8804-4727-a63e-1e21589ea091/microsoft.web/sites/subscriptions/515bb616-8804-4727-a63e-1e21589ea091/resourceGroups/GET-Assessment/providers/Microsoft.Web/sites/Nilesh-Angular-FrontEnd",
+  "appService.deploySubpath": "dist",
+  "appService.showBuildDuringDeployPrompt": false
 }

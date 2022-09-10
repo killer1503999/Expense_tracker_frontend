@@ -14,6 +14,7 @@ export class ProductdetailShowComponent implements OnInit {
   message: any
   ProductList=[];
   Images:string;
+  file_name:String;
 
   ngOnInit(): void {
     this.message = this.services.getMessage();
@@ -27,6 +28,7 @@ export class ProductdetailShowComponent implements OnInit {
   refreshProductList(Factory_id,Product_id) {
     this.services.getProductDetails(Factory_id,Product_id).subscribe(data => {this.ProductList=data["message"]; 
     this.Images=this.services.PhotoUrl+this.ProductList[0]["image"];
+    console.log(this.Images)
 
     // console.log(this.ProductList);
   })
@@ -40,7 +42,10 @@ export class ProductdetailShowComponent implements OnInit {
   download(){
     this.http.get(this.Images,{responseType: 'blob'}).subscribe((data:Blob | MediaSource) =>{
       let downloadURL = window.URL.createObjectURL(data)
-      saveAs(downloadURL)
+      
+      this.file_name=<String>(this.ProductList[0]["image"]);
+      saveAs(downloadURL,this.file_name)
+      console.log("downloadURL")
       console.log(window.URL.createObjectURL(data))
     })
     

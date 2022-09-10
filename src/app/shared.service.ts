@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-const baseUrl = 'https://nileshdjangorest.azurewebsites.net/factory';
+const baseUrl = 'https://nileshdjangobackend.azurewebsites.net/factory';
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
 // this.http = http;
-readonly APIUrl="https://nileshdjangorest.azurewebsites.net/"
-readonly PhotoUrl="https://nileshdjangorest.azurewebsites.net/"
+readonly APIUrl="https://nileshdjangobackend.azurewebsites.net/"
+readonly PhotoUrl="https://assessmentstgacc.blob.core.windows.net/nileshimagescontainer"
   constructor(private http:HttpClient) { }
 
 
