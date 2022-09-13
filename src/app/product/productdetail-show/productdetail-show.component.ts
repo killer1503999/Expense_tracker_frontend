@@ -28,7 +28,7 @@ export class ProductdetailShowComponent implements OnInit {
   refreshProductList(Factory_id,Product_id) {
     this.services.getProductDetails(Factory_id,Product_id).subscribe(data => {this.ProductList=data["message"]; 
     this.Images=this.services.PhotoUrl+this.ProductList[0]["image"];
-    console.log(this.Images)
+    console.log(this.ProductList[0]["image"])
 
     // console.log(this.ProductList);
   })

@@ -9,6 +9,7 @@ export class SharedService {
 // this.http = http;
 readonly APIUrl="https://nileshdjangobackend.azurewebsites.net/"
 readonly PhotoUrl="https://assessmentstgacc.blob.core.windows.net/nileshimagescontainer"
+readonly imageformaturl=['.jpg', '.jpeg', '.jpg']
   constructor(private http:HttpClient) { }
 
 

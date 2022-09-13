@@ -22,8 +22,13 @@ export class AddEditComponent implements OnInit {
   factoryName:number;
   productList=[];
   imageUrl:string;
+  file_name:String;
 
   disabledbutton="false";
+  filesforcheck:File;
+  imageformart=this.services.imageformaturl.toString();
+  
+//   filecheckname:String;
   
 
 
@@ -99,32 +104,62 @@ export class AddEditComponent implements OnInit {
       
     }
     selectedFile=null;
+    
     onFileSelected(event) {
       this.selectedFile=<File>event.target.files[0];
+      
       console.log(this.selectedFile);
+      console.log(this.validateFile(this.selectedFile))
       
     }
+
+    
+
+    validateFile(selectedFile) {
+      console.log(111111);
+      // this.filesforcheck = event.target.files;
+      let filecheckname=<String>(selectedFile.name);
+      var ext = filecheckname.substring(filecheckname.lastIndexOf('.'));
+      if (this.services.imageformaturl.includes(ext.toLowerCase())) {
+            console.log(filecheckname);
+          return true;
+      }
+      else {
+            console.log(this.services.imageformaturl.includes(ext.toLowerCase()));
+            console.log(ext.toLowerCase());
+            console.log(this.services.imageformaturl);
+          return false;
+      }
+  }
     download(){
+      console.log("this.imageUrl");
       this.http.get(this.imageUrl,{responseType: 'blob'}).subscribe((data:Blob | MediaSource) =>
-      window.open(window.URL.createObjectURL(data))
+      {let downloadURL = window.URL.createObjectURL(data)
+      this.file_name=<String>(this.image.toString().substring(this.image.toString().lastIndexOf('/')+1));
+      saveAs(downloadURL,this.file_name)}
       
       )
-      console.log(this.imageUrl);
+      // filecheckname.substring(filecheckname.lastIndexOf('.'))
+      // console.log(typeof(this.image.toString()));
+      // console.log(this.image.toString().substring(this.image.toString().lastIndexOf('/')+1));
     }
     
   isDisabled():boolean {
-    if(this.quantity <1 || this.productsName =="" || this.description == "" || this.image==null || this.selectedFile==null) {
+    if(this.quantity <1 || this.productsName =="" || this.description == "" || this.image==null || this.selectedFile==null || this.validateFile(this.selectedFile)==false) {
       return true
     }
     return false
     }
-
     isDisabledup():boolean {
-      if(this.quantity <1 || this.productsName =="" || this.description == "" || this.image==null ) {
+      
+      if(this.quantity <1 || this.productsName =="" || this.description == "" || this.validateFile(this.selectedFile)==false ) {
+            console.log(this.quantity,this.productsName,this.description,)
         return true
+
       }
       return false
       }
+      
 }
 
 
