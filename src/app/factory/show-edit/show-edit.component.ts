@@ -13,24 +13,30 @@ export class ShowEditComponent implements OnInit {
   Modaltitle:string;
   ActivateAddEditFactory:boolean;
   dep:any;
+  pageaccess=this.services.pageaccess;
+  user="user";
+  approver="approver";
   ngOnInit(): void {
      this.refreshFactoryList();
+     
   }
 
   refreshFactoryList() {
     this.services.getFactoryList().subscribe(data => {
       this.factoryList=data;
+      console.log(data)
+      
     })
     
   }
   addClick(){
     this.dep={
-      id:0,
-      name:"",
-      location:"",
+      userId :0,
+      userName:"",
 
     }
-  this.Modaltitle="Add Factory";
+    this.services.sendMessage(this.factoryList);
+  this.Modaltitle="Add User";
   this.ActivateAddEditFactory = true;
 
   }
@@ -41,7 +47,7 @@ export class ShowEditComponent implements OnInit {
   }
   deleteFactory(factory){
     if(confirm('Are you sure??')){
-      this.services.deleteFactoryList(factory.id).subscribe(data=>{
+      this.services.deleteFactoryList(factory.userId ).subscribe(data=>{
         alert("Done!".toString());
         this.refreshFactoryList();
       })

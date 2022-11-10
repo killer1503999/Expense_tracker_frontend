@@ -1,17 +1,12 @@
 <button
-  routerLink="/user/expense"
+  routerLink="/approvers/AcceptorReject"
   type="button"
   class="btn btn-primary"
   (click)="onProductClick()"
 >
   Go back to Expense List
 </button>
-<button
-  type="button"
-  class="btn btn-primary"
-  [disabled]="checkDownload()"
-  (click)="download()"
->
+<button type="button" class="btn btn-primary" (click)="download()">
   download
 </button>
 <div class="product_details">
@@ -46,9 +41,8 @@
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Date of Expense</label>
       <input
-        type="email"
+        type="date"
         class="form-control"
-        id="exampleInputEmail1"
         aria-describedby="emailHelp"
         value="{{ ConvertDateToStringFormat(this.ProductList[0].date) }}"
         style="width: 200px"
@@ -72,25 +66,23 @@
       <label for="exampleFormControlTextarea1" class="form-label"
         >Expense Status</label
       >
-      <textarea
-        class="Discription_box form-control"
-        id="exampleFormControlTextarea1"
-        rows="3"
-        value="{{ ProductList[0].approvedStatus }}"
-        readonly
-      ></textarea>
+      <div class="select">
+        <select name="slct" id="slct" (change)="AcceptorReject($event)">
+          <option value="Pending">Pending</option>
+          <option value="ACCEPTED">Accept</option>
+          <option value="REJECTED">Reject</option>
+        </select>
+      </div>
     </div>
     <div class="mb-3">
-      <label for="exampleFormControlTextarea1" class="form-label"
-        >Approvers comment</label
-      >
-      <textarea
-        class="Discription_box form-control"
-        id="exampleFormControlTextarea1"
-        rows="3"
-        value="{{ ProductList[0].approversComments }}"
-        readonly
-      ></textarea>
+      <div>
+        <!-- <textarea
+          class="Discription_box form-control"
+          id="exampleFormControlTextarea1"
+          rows="3"
+          [value]="Status"
+        ></textarea> -->
+      </div>
     </div>
     <div class="image_box">
       <label for="exampleFormControlTextarea1"> Product Photo</label>
@@ -102,5 +94,25 @@
         <img [src]="Images" class="img-responsive" alt="" />
       </div>
     </div>
+    <label for="exampleFormControlTextarea1" class="form-label"
+      >Approvers comment</label
+    >
+    <textarea
+      class="Discription_box form-control"
+      id="exampleFormControlTextarea1"
+      rows="3"
+      [value]="Status"
+      (change)="AcceptorRejectcomment($event)"
+      [(ngModel)]="approversComments"
+    ></textarea>
+    <button
+      class="col-auto btn btn-primary"
+      (click)="updateDepartment()"
+      [disabled]="isDisabled()"
+    >
+      Submit
+    </button>
   </form>
 </div>
+
+<!-- [disabled]="isDisabledup()" -->

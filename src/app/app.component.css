@@ -1,13 +1,16 @@
-h1{
+ h1{
     text-align: center;
 }
+span.Rs {
+      content: "\20B9";
+    }
 
-nav{
+/* nav{
     margin-top: 10px;
     margin-bottom: 10px
-}
+} */
 
-.Goto {
+/* .Goto {
     margin-right: 100px;
     background-color: aqua;
-}
+} */

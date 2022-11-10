@@ -13,6 +13,9 @@ import {FormsModule,ReactiveFormsModule} from '@angular/forms';
 import { AddEditFactoryComponent } from './factory/add-edit-factory/add-edit-factory.component';
 import { ProductShowEditComponent } from './product/product-show-edit/product-show-edit.component';
 import { ProductdetailShowComponent } from './product/productdetail-show/productdetail-show.component';
+import { ApproversComponent } from './approvers/approvers.component';
+import { AprroveraddeditComponent } from './approvers/aprroveraddedit/aprroveraddedit.component';
+import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from "ngx-ui-loader";
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,14 +25,18 @@ import { ProductdetailShowComponent } from './product/productdetail-show/product
     AddEditComponent,
     AddEditFactoryComponent,
     ProductShowEditComponent,
-    ProductdetailShowComponent
+    ProductdetailShowComponent,
+    ApproversComponent,
+    AprroveraddeditComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxUiLoaderModule,
+    NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
   ],
   providers: [SharedService],
   bootstrap: [AppComponent]

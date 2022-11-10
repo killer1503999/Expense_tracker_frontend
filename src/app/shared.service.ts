@@ -1,62 +1,106 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-const baseUrl = 'https://nileshdjangobackend.azurewebsites.net/factory';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+
+const baseUrl = 'https://assessment-apim.azure-api.net/expense/Expense';
 @Injectable({
-  providedIn: 'root'
+      providedIn: 'root'
 })
 export class SharedService {
-// this.http = http;
-readonly APIUrl="https://nileshdjangobackend.azurewebsites.net/"
-readonly PhotoUrl="https://assessmentstgacc.blob.core.windows.net/nileshimagescontainer"
-readonly imageformaturl=['.jpg', '.jpeg', '.jpg']
-  constructor(private http:HttpClient) { }
+      test:any="";
+      // this.http = http;
+      readonly APIUrl = "https://nileshdjangobackend.azurewebsites.net/"
+      readonly PhotoUrl = "https://assessmentstgacc.blob.core.windows.net/nileshexpensetracker/nileshexpensetracker"
+      readonly recieptImageformaturl = ['.jpg', '.jpeg', '.jpg']
+      pageaccess = "user"
 
+      constructor(private http: HttpClient) { }
+      authenticate = "";
+      httpheaders= new HttpHeaders({
+            "Ocp-Apim-Subscription-Key": "918a8a3af99e4b43a2284ad7c1d2ef15"
+      })
+      
+      getsecerts(){
+            this.http.get('https://nilesh-expense-tracker.azurewebsites.net/api/httptriggergetsecerts?').subscribe(data => {
+            this.test=data;
+            // console.log(this.test);
+          })
+          return this.test
+      }
+      getFactoryList() {
+            let head = this.getsecerts();
+            let httpheaders= new HttpHeaders({
+                  "Ocp-Apim-Subscription-Key": head
+            })
+            return this.http.get(`${baseUrl}/`,{headers:this.httpheaders});
+      }
+      postFactoryList(val) {
+            
+            return this.http.post(`${baseUrl}/`, val,{headers:this.httpheaders});
+      }
+      deleteFactoryList(pk) {
+            
+            return this.http.delete(`${baseUrl}/${pk}/`,{headers:this.httpheaders});
+      }
 
-  getFactoryList(){
-    return this.http.get(`${baseUrl}/`);
-  }
-  postFactoryList(val){
-    console.log(val,"postFactoryList");
-    return this.http.post(`${baseUrl}/`,val);
-    
-  }
-  deleteFactoryList(id){
-    console.log(id,"postFactoryList");
-    return this.http.delete(`${baseUrl}/${id}/delete/`);
-    
-  }
+      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-  getProductList(id){
+      getProductList(pk) {
+            return this.http.get(`${baseUrl}/${pk}/expense/`,{headers:this.httpheaders});
+      }
 
-    return this.http.get(`${baseUrl}/${id}/`);
-    
-  }
+      getProductDetails(pk, id) {
+            return this.http.get(`${baseUrl}/${pk}/expense/details/${id}/`,{headers:this.httpheaders});
+      }
 
-  getProductDetails(id,val){
-    return this.http.get(`${baseUrl}/${id}/${val}/`);
-  }
+      addProduct(pk, values: any) {
+            return this.http.post(`${baseUrl}/${pk}/expense/`, values,{headers:this.httpheaders});
+      }
 
-  addProduct(id,values:any){
-    console.log(`${baseUrl}/${id}/`);
-    return this.http.post(`${baseUrl}/${id}/`,values);
-  }
+      updateProductDetails(pk, id, values: any) {
+            return this.http.put(`${baseUrl}/${pk}/expense/details/${id}/`, values,{headers:this.httpheaders});
+      }
 
-  updateProductDetails(id,val,values:any){
-    return this.http.put(`${baseUrl}/${id}/${val}/`,values);
-  }
+      deleteProductDetails(pk, id) {
+            return this.http.delete(`${baseUrl}/${pk}/expense/details/${id}/`,{headers:this.httpheaders});
+      }
 
-  deleteProductDetails(id,val){
-    return this.http.delete(`${baseUrl}/${id}/${val}/`);
-  }
+      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+      getapproversAccessList(pk) {
+            return this.http.get(`${baseUrl}/${pk}/approver/access/`,{headers:this.httpheaders});
+      }
 
-  message:string;
-  sendMessage(data:any){
-    this.message = data;
-  }
-  getMessage(){
-    return this.message;
+      getapproversAccessDetails(pk, id) {
+
+            return this.http.get(`${baseUrl}/${pk}/approver/access/${id}/`,{headers:this.httpheaders});
+      }
+
+      addapproversAccess(pk, values: any) {
+
+            
+            return this.http.post(`${baseUrl}/${pk}/expense/`, values,{headers:this.httpheaders});
+      }
+
+      updateapproversAccessDetails(pk, id, values: any) {
+            
+            return this.http.put(`${baseUrl}/${pk}/approver/access/${id}/`, values,{headers:this.httpheaders});
+      }
+
+      deleteapproversAccessDetails(pk, id) {
+            
+            return this.http.delete(`${baseUrl}/${pk}/approver/access/${id}/`,{headers:this.httpheaders});
+      }
+      // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+      message: string;
+      sendMessage(data: any) {
+            this.message = data;
+      }
+      getMessage() {
+            return this.message;
+      }
+
 }
 
-}
+
 

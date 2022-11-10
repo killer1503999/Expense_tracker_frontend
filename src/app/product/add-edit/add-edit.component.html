@@ -1,51 +1,56 @@
 <div class="from-group row">
   <div class="mb-3">
-    <label class="col-form-label">Product Name</label>
+    <label class="col-form-label">expenseCategory</label>
     <input
       required
       type="text"
       #productsFormName="ngModel"
       class="form-control"
-      [(ngModel)]="productsName"
+      [(ngModel)]="expenseCategory"
     />
+    <label class="col-form-label">Date</label>
+    <input
+      required
+      type="date"
+      placeholder="yyyy-dd-mm"
+      pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+      #productsFormName="ngModel"
+      class="form-control"
+      [(ngModel)]="date"
+    />
+
     <div
       *ngIf="productsFormName.touched && productsFormName.invalid"
       class="alert-danger"
     >
-      Product Name is required
+      Expense date is required
     </div>
   </div>
   <div class="col-md-3">
-    <label class="col-form-label">Quantity</label>
+    <label class="col-form-label">Amount (in ₹)</label>
     <input
       required
       type="number"
       #quantityForm="ngModel"
       class="form-control"
-      [(ngModel)]="quantity"
+      [(ngModel)]="amount"
     />
     <div
-      *ngIf="quantityForm.touched && quantityForm.value < 1"
+      *ngIf="quantityForm.touched && quantityForm.value < 0"
       class="alert-danger"
       disabledbutton="true"
     >
-      Product quantity should be greater than 1
+      Amount should be greater than 0
     </div>
   </div>
   <div class="col-sm-3">
-    <label class="col-form-label">Factory ID</label>
-    <input
-      type="number"
-      class="form-control"
-      [(ngModel)]="factoryName"
-      readonly
-    />
+    <label class="col-form-label">userId</label>
+    <input type="text" class="form-control" [(ngModel)]="userId" readonly />
   </div>
   <div class="ml-3 bd-highlight">
     <!-- <label class="col-form-label">Image</label> -->
-    <img [src]="imageUrl" class="img-responsive" alt="" />
+    <img [src]="recieptImageUrl" class="img-responsive" alt="" />
     <input
-      required
       type="file"
       (change)="onFileSelected($event)"
       class="col-xl-30 form-control"
@@ -60,27 +65,25 @@
     <!-- <button type="button" (click)="onUpload()" class="btn btn-primary">Upload</button> -->
   </div>
   <div class="col-xl-30">
-    <label for="exampleFormControlTextarea1" class="form-label"
-      >Description</label
-    >
+    <label for="exampleFormControlTextarea1" class="form-label">Comment</label>
     <textarea
       required
       #descriptionform="ngModel"
       class="form-control"
       id="exampleFormControlTextarea1"
       rows="3"
-      [(ngModel)]="description"
+      [(ngModel)]="comments"
       >{{ descriptionform.invalid }}</textarea
     >
     <div
       *ngIf="descriptionform.touched && descriptionform.invalid"
       class="alert-danger"
     >
-      Provide discription for the product
+      Please provide comment for the added expense
     </div>
   </div>
 </div>
-<div *ngIf="image != null" class="download">
+<div *ngIf="recieptImage != null" class="download">
   <button
     *ngIf="dep.id != 0"
     class="col-auto btn btn-primary mt-3333"

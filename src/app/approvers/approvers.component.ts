@@ -1,18 +1,16 @@
+// import { Component, OnInit } from '@angular/core';
 import { Component, OnInit,Input } from '@angular/core';
 import {SharedService} from 'src/app/shared.service';
 import {HttpClient} from '@angular/common/http';
 import * as saveAs from 'file-saver';
-
 @Component({
-  selector: 'app-add-edit',
-  templateUrl: './add-edit.component.html',
-  styleUrls: ['./add-edit.component.css']
+  selector: 'app-approvers',
+  templateUrl: './approvers.component.html',
+  styleUrls: ['./approvers.component.css']
 })
-export class AddEditComponent implements OnInit {
- 
+export class ApproversComponent implements OnInit {
 
   constructor(private services:SharedService,private http:HttpClient) { }
-
   @Input() dep:any;
   id:number;
   amount:0;
@@ -26,77 +24,40 @@ export class AddEditComponent implements OnInit {
   productList=[];
   recieptImageUrl:string;
   file_name:String;
+  message: any
+  ProductList: any=[];
+  ActivateAddEditProductDetails=false;
+  checkemptyarray=[];
+  test=true;
 
-  disabledbutton="false";
-  filesforcheck:File;
-  imageformart=this.services.recieptImageformaturl.toString();
-  
-//   filecheckname:String;
-  
-
-
-  
-      
-
+  DepartmentIdFilter:string="";
+  DepartmentNameFilter:string="";
+  DepartmentListWithoutFilter:any=[];
   ngOnInit(): void {
-      console.log(this.dep.recieptImage);
-      console.log(typeof(this.dep.recieptImage))
-    this.id=this.dep.id;
-    this.amount=this.dep.amount;
-    this.expenseCategory=this.dep.expenseCategory;
-    this.comments=this.dep.comments;
-    this.recieptImage=this.dep.recieptImage;
-    console.log(this.dep.recieptImage);
-    console.log(typeof(this.dep.recieptImage));
+      this.message=this.services.getMessage();
+      // this.message.userId
+      this.refreshProductList(this.message.userId);
+      console.log()
 
-    this.userId=this.dep.userDetail;
-    this.date=this.dep.date;
-    this.recieptImageUrl=this.services.PhotoUrl+this.recieptImage
-  
-    this.services.getProductList(this.dep.userId)
-//     console.log("?????????????????????????????????????????///////////////////////////////////")
-//     console.log(typeof(this.dep.date.getDate))
-//     console.log(typeof(this.dep.date.getMonth))
-//     console.log(typeof(this.dep.date.getFullYear))
-//     console.log(this.dep.date.getDate)
-//     console.log(this.dep.date.getMonth)
-    console.log(this.userId)
-//     console.log(new Date((this.date.getFullYear.toString()+this.date.getMonth.toString()+this.date.getDate.toString())))
-   
-//     console.log(this.date.getFullYear+this.date.getMonth+)
-    
-//     console.log((this.date.getTime));
     }
-    addDepartment(){
-      const fd=new FormData();
-      fd.append("expenseCategory",this.expenseCategory);
-      fd.append('date',this.date.toString());
-      fd.append("amount",this.amount.toString());
-      fd.append("comments",this.comments);
-      if (this.selectedFile !=null){
-            fd.append('recieptImage',this.selectedFile);
-      }
-      else{
-            fd.append('recieptImage','');
-      }
-      
-      
-      console.log(fd.getAll('image'));
-      fd.append('userId',this.userId.toString());
-      console.log(this.date)
 
-
-      if(confirm('Are you sure??')){
-        this.services.addProduct(this.userId,fd).subscribe(res=>{
-          alert("Done!".toString());
-          });
-      }
-      
-      //   console.log(res)
-      // });
+    refreshProductList(messaage) {
+      this.services.getapproversAccessList(messaage).subscribe(data => {
+        this.ProductList=data["message"];
+        console.log(this.ProductList);
+        console.log(this.ProductList.length == 0);
+        if ( this.ProductList.length != 0){
+            this.test= false
+        }
+        else{
+            this.test=true
+        }
+      })
     }
-  
-    updateDepartment(){
+    sendMessage(messsage){
+      this.services.sendMessage(messsage);
+   }
+  updateDepartment(){
       const fd=new FormData();
       if (this.selectedFile!=null){
             fd.append("expenseCategory",this.expenseCategory);
@@ -106,13 +67,13 @@ export class AddEditComponent implements OnInit {
             fd.append('recieptImage',this.selectedFile);
             console.log(fd.getAll('image'));
             fd.append('userId',this.userId.toString());
-        
+
         if(confirm('Are you sure??')){
-          this.services.updateProductDetails(this.userId,this.id,fd).subscribe(res=>{
+          this.services.updateapproversAccessDetails(this.userId,this.id,fd).subscribe(res=>{
             alert("Done!".toString());
             });
         }
-        this.services.getProductList(this.dep.userId)
+        this.services.getapproversAccessList(this.dep.userId)
       }
       if (this.selectedFile==null) {
         console.log(this.userId);
@@ -123,29 +84,29 @@ export class AddEditComponent implements OnInit {
         fd.append('date',this.date.toString());
         fd.append('userId',this.userId.toString());
         // fd.append('image',this.selectedFile,this.selectedFile.name);
-        
+
 
         console.log(this.userId.toString());
         if(confirm('Are you sure??')){
-          this.services.updateProductDetails(this.userId,this.id,fd).subscribe(res=>{
+          this.services.updateapproversAccessDetails(this.userId,this.id,fd).subscribe(res=>{
             alert("Done!".toString());
             });
         }
-        this.services.getProductList(this.dep.userId)
+        this.services.getapproversAccessList(this.dep.userId)
       }
-      
+
     }
     selectedFile=null;
-    
+
     onFileSelected(event) {
       this.selectedFile=<File>event.target.files[0];
-      
+
       console.log(this.selectedFile);
       console.log(this.validateFile(this.selectedFile))
-      
+
     }
 
-    
+
 
     validateFile(selectedFile) {
       console.log(111111);
@@ -163,41 +124,36 @@ export class AddEditComponent implements OnInit {
           return false;
       }
   }
+  deleteClick(item){
+      if(confirm('Are you sure??')){
+        this.services.deleteProductDetails(this.message.userId,item.id).subscribe(data=>{
+          alert("Done!".toString());
+          this.refreshProductList(this.message.userId);
+        })
+      }
+    }
     download(){
       console.log("this.recieptImageUrl");
       this.http.get(this.recieptImageUrl,{responseType: 'blob'}).subscribe((data:Blob | MediaSource) =>
       {let downloadURL = window.URL.createObjectURL(data)
       this.file_name=<String>(this.recieptImage.toString().substring(this.recieptImage.toString().lastIndexOf('/')+1));
       saveAs(downloadURL,this.file_name)}
-      
+
       )
       // filecheckname.substring(filecheckname.lastIndexOf('.'))
       // console.log(typeof(this.recieptImage.toString()));
       // console.log(this.recieptImage.toString().substring(this.recieptImage.toString().lastIndexOf('/')+1));
     }
-    
+
   isDisabled():boolean {
-      if (this.selectedFile !=null){if(this.amount <1 || this.expenseCategory =="" || this.comments == "" || this.validateFile(this.selectedFile)==false) {
-            return true
-          }
-          return false
-
-      //     || this.recieptImage==null || this.selectedFile==null || this.validateFile(this.selectedFile)==false
-          }
-          else{
-            {if(this.amount <1 || this.expenseCategory =="" || this.comments == "" ) {
-                  return true
-                }
-                return false
-            //     || this.recieptImage==null || this.selectedFile==null || this.validateFile(this.selectedFile)==false
-                }}
-            }
-          
-
-          
-    
+    if(this.amount <1 || this.expenseCategory =="" || this.comments == "" ) {
+      return true
+    }
+    return false
+//     || this.recieptImage==null || this.selectedFile==null || this.validateFile(this.selectedFile)==false
+    }
     isDisabledup():boolean {
-      
+
       if(this.amount <1 || this.expenseCategory =="" || this.comments == "" || this.validateFile(this.selectedFile)==false ) {
             console.log(this.amount,this.expenseCategory,this.comments,)
         return true
@@ -213,8 +169,31 @@ export class AddEditComponent implements OnInit {
             return dt.getFullYear() +"-"+ month +"-" + day;
         }
 
-      
-      
+        sortResult(prop,asc){
+            this.ProductList = this.DepartmentListWithoutFilter.sort(function(a,b){
+                  if (prop=="amount"){
+                        let a1:number;
+                        let b1:number;
+
+                        a1= parseFloat(a[prop]);
+                        b1= parseFloat(b[prop]);
+                    if(asc){
+                        return (a1>b1)?1 : ((a1<b1) ?-1 :0);
+                    }
+                    else{
+                      return (b1>a1)?1 : ((b1<a1) ?-1 :0);
+                    }
+                  }
+                  else{
+              if(asc){
+                  return (a[prop]>b[prop])?1 : ((a[prop]<b[prop]) ?-1 :0);
+              }
+              else{
+
+                return (a[prop]>a[prop])?1 : ((b[prop]<a[prop]) ?-1 :0);
+              }
+                  }
+            })
+          }
+
 }
-
-

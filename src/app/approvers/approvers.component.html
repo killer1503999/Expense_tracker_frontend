@@ -1,5 +1,5 @@
 <!-- Button trigger modal -->
-<button
+<!-- <button
   type="button"
   class="btn btn-primary float-right m-2"
   data-bs-toggle="modal"
@@ -9,7 +9,7 @@
   data-keyboard="false"
 >
   Add Product
-</button>
+</button> -->
 
 <!-- Modal -->
 <div
@@ -22,14 +22,14 @@
   <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{ Modaltitle }}</h5>
-        <button
+        <!-- <h5 class="modal-title" id="exampleModalLabel">{{ Modaltitle }}</h5> -->
+        <!-- <button
           type="button"
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="Close"
           (click)="closeClick()"
-        ></button>
+        ></button> -->
       </div>
       <div class="modal-body">
         <app-add-edit
@@ -42,24 +42,15 @@
 </div>
 <!-- Product Table starts here -->
 <p class="text-center">
-  Welcome!,{{ message.userName }} currently you are logged in with Id
-  {{ message.userId }}
+  You have entered the account of {{ message.userName }}
 </p>
-
+<!-- <p class="text-center">{{ message.userName }}</p> -->
 <div *ngIf="test == false">
   <table class="table">
     <thead>
       <tr>
         <th scope="col">Expense Id</th>
-        <th scope="col">
-          <input
-            [(ngModel)]="DepartmentNameFilter"
-            class="form-control"
-            (keyup)="FilterFn()"
-            placeholder="Filter"
-          />
-          Expense Category
-        </th>
+        <th scope="col">Expense Category</th>
         <th scope="col">
           Date of Expense<button
             type="button"
@@ -141,22 +132,7 @@
           </button>
         </th>
         <th scope="col">User Description</th>
-        <th scope="col">
-          <div
-            class="select"
-            [(ngModel)]="DepartmentIdFilter"
-            class="form-control"
-            (change)="FilterFn()"
-          >
-            <select name="slct" id="slct" (change)="AcceptorReject($event)">
-              <option value="">All</option>
-              <option value="Pending">Pending</option>
-              <option value="ACCEPTED">Accept</option>
-              <option value="REJECTED">Reject</option>
-            </select>
-          </div>
-          Approval Status
-        </th>
+        <th scope="col">Approval Status</th>
         <th scope="col">Approvers comment</th>
         <th scope="col">Options</th>
       </tr>
@@ -166,42 +142,38 @@
         <th scope="row">{{ product.id }}</th>
         <td>{{ product.expenseCategory }}</td>
         <td>{{ ConvertDateToStringFormat(product.date) }}</td>
-        <td>
-          <!-- {{ product.amount.toString() }} -->
-          {{ product.amount.toString().slice(0, -3) }}
-        </td>
+        <td>{{ product.amount.toString().slice(0, -3) }}</td>
         <td>{{ product.comments }}</td>
         <td>{{ product.approvedStatus }}</td>
         <td>{{ product.approversComments }}</td>
 
         <td>
-          <button
-            *ngIf="isDisabledup(product)"
-            type="button"
-            class="btn btn-light mr-10"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-            (click)="editClick(product)"
-            data-backdrop="static"
-            data-keyboard="false"
+          <!-- <button
+              type="button"
+              class="btn btn-light mr-10"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              (click)="editClick(product)"
+              data-backdrop="static"
+              data-keyboard="false"
+            > -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-pencil-square"
+            viewBox="0 0 16 16"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-pencil-square"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
-              />
-              <path
-                fill-rule="evenodd"
-                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
-              />
-            </svg>
-          </button>
+            <path
+              d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+            />
+            <path
+              fill-rule="evenodd"
+              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+            />
+          </svg>
+          <!-- </button> -->
           <!-- this is for edit Click -->
 
           <button
@@ -227,7 +199,7 @@
             type="button"
             class="btn btn-light mr-10"
             (click)="sendMessage([product, message])"
-            routerLink="expensedetail"
+            routerLink="Check"
           >
             Expand
           </button>
@@ -242,8 +214,86 @@
       <tr>
         <th scope="col">Expense Id</th>
         <th scope="col">Expense Category</th>
-        <th scope="col">Date of Expense</th>
-        <th scope="col">Amount</th>
+        <th scope="col">
+          Date of Expense<button
+            type="button"
+            class="btn btn-light"
+            (click)="sortResult('date', true)"
+          >
+            <svg
+              width="1em"
+              height="1em"
+              viewBox="0 0 16 16"
+              class="bi bi-arrow-down-square-fill"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 5a.5.5 0 0 0-1 0v4.793L5.354 7.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 9.793V5z"
+              />
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="btn btn-light"
+            (click)="sortResult('date', false)"
+          >
+            <svg
+              width="1em"
+              height="1em"
+              viewBox="0 0 16 16"
+              class="bi bi-arrow-up-square-fill"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 8.354a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 6.207V11a.5.5 0 0 1-1 0V6.207L5.354 8.354z"
+              />
+            </svg>
+          </button>
+        </th>
+        <th scope="col">
+          Amount (in ₹)<button
+            type="button"
+            class="btn btn-light"
+            (click)="sortResult('amount', true)"
+          >
+            <svg
+              width="1em"
+              height="1em"
+              viewBox="0 0 16 16"
+              class="bi bi-arrow-down-square-fill"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 5a.5.5 0 0 0-1 0v4.793L5.354 7.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 9.793V5z"
+              />
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="btn btn-light"
+            (click)="sortResult('amount', false)"
+          >
+            <svg
+              width="1em"
+              height="1em"
+              viewBox="0 0 16 16"
+              class="bi bi-arrow-up-square-fill"
+              fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 8.354a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 6.207V11a.5.5 0 0 1-1 0V6.207L5.354 8.354z"
+              />
+            </svg>
+          </button>
+        </th>
         <th scope="col">User Description</th>
         <th scope="col">Approval Status</th>
         <th scope="col">Approvers comment</th>
@@ -255,6 +305,5 @@
     <p>No Expense to Show !!!</p>
   </div>
 </div>
-<!-- {{ sortResult("amount", false) }} -->
 
 <!-- Product Table ends here -->
